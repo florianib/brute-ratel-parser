@@ -24,7 +24,7 @@ Options:
 # Example
 ```
 brute_ratel_parser.exe -p C:\temp\logs
-	Combining the log files
+  Combining the log files
   Found 9 log files
   Combined the logs
   Generating excel file
