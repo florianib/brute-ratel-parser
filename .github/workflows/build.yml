@@ -8,6 +8,8 @@ jobs:
   build-and-release: # Renamed job for clarity
     name: Build and Release for ${{ matrix.target }}
     runs-on: windows-latest
+    permissions:
+      contents: write
     
     strategy:
       matrix:
