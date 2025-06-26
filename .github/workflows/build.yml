@@ -1,12 +1,12 @@
-name: Build
+name: Build and Release
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build-and-upload:
-    name: Release ${{ matrix.target }}
+  build-and-release: # Renamed job for clarity
+    name: Build and Release for ${{ matrix.target }}
     runs-on: windows-latest
     
     strategy:
@@ -25,16 +25,15 @@ jobs:
           
       - name: Build
         uses: actions-rs/cargo@v1
-        
-      - name: Create/Update Release with latest PDFs
-        uses: ncipollo/release-action@v1
         with:
-          #use-cross: true
           command: build
           args: --verbose --release --target ${{ matrix.target }}
+          
+      - name: Create/Update Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: target/${{ matrix.target }}/release/*.exe
           tag: latest
-          name: "Latest Build (${{ github.event.repository.updated_at }})"
-          artifacts: |
-            target/release/*.exe
+          name: "Latest Build (${{ github.sha }})"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
